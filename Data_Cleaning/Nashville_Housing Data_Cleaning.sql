@@ -1,22 +1,12 @@
---SELECT * FROM nashville_housing;
-
 /*
 Data Cleaning Using SQL
 */
+SELECT *
+FROM Nashville_Housing;
 ------------------------------------------------------------------------------
 
 --Standardize Date Format (SaleDate)
 --Was Previously in a DateTime format
-
-/* First One didn't work for Me
-
-UPDATE Nashville_Housing
-SET SaleDate =  CONVERT(Date, SaleDate);
-
-*/
-
-SELECT SaleDateConverted, CONVERT(Date, SaleDate)
-FROM Nashville_housing;
 
 ALTER TABLE Nashville_Housing
 ADD SaleDateConverted Date
@@ -142,9 +132,9 @@ select
       SoldAsVacant,
 	  CASE
 	      when SoldAsVacant = 'Y' then 'Yes'
-		  when SoldAsVacant = 'N' then 'No'
-		  else SoldAsVacant
-		  end
+	      when SoldAsVacant = 'N' then 'No'
+	      else SoldAsVacant
+	      end
 FROM Nashville_Housing; 
 
 
@@ -152,30 +142,30 @@ FROM Nashville_Housing;
 UPDATE nashville_Housing
 SET SoldAsVacant = CASE
 	                  when SoldAsVacant = 'Y' then 'Yes'
-		              when SoldAsVacant = 'N' then 'No'
-		              else SoldAsVacant
-		           end;
+		          when SoldAsVacant = 'N' then 'No'
+		          else SoldAsVacant
+		          end;
 
 ----------------------------------------------------------------------------------------------------------
 -- Remove Duplicates
 WITH RowNumCTE AS (
 select *,
    ROW_NUMBER() over (
-   PARTITION BY ParcelID,
-                PropertyAddress,
-				SalePrice,
-				SaleDate,
-				LegalReference
-				ORDER BY
-				      UniqueID
-					  ) AS row_num
+                      PARTITION BY ParcelID,
+                                   PropertyAddress,
+				   SalePrice,
+				   SaleDate,
+				   LegalReference
+                          ORDER BY
+				   UniqueID
+				  ) AS row_num
 from Nashville_Housing
 )
 --DELETE
 select *
 from RowNumCTE
 where row_num > 1
---order by PropertyAddress;
+ORDER BY PropertyAddress;
 
 -------------------------------------------------------------------------------------------------------------
 
