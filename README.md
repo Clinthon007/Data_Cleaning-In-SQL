@@ -26,11 +26,6 @@ Using SQL to clean a Nashville_Housing dataset containing **56,477** rows of dat
 
 
 ```SQL
-SELECT
-      SaleDateConverted, CONVERT(Date, SaleDate)
-FROM
-      Nashville_housing;
-
 ALTER TABLE Nashville_Housing
 ADD SaleDateConverted Date
 
